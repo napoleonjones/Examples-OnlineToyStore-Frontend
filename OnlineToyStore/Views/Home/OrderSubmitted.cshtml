@@ -1,0 +1,21 @@
+﻿@model OnlineToyStore.Core.Models.Order
+@{
+    ViewData["Title"] = "OrderSubmitted";
+}
+
+<h1>OrderSubmitted</h1>
+<div>
+    <p>Your order was successfully submitted. </p>
+</div>
+<div>
+    <h3>Order Details</h3>
+    <div>
+        @Html.LabelFor(x => x.Id)
+        @Html.DisplayFor(x => x.Id)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.OrderDate)
+        @Model.OrderDate.ToLocalTime().ToString("MM/dd/yyyy hh:mm tt")
+    </div>
+
+</div>
