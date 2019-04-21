@@ -3,7 +3,7 @@
     ViewData["Title"] = "OrderSubmitted";
 }
 
-<h1>OrderSubmitted</h1>
+<h2>OrderSubmitted</h2>
 <div>
     <p>Your order was successfully submitted. </p>
 </div>
@@ -16,6 +16,9 @@
     <div>
         @Html.LabelFor(x => x.OrderDate)
         @Model.OrderDate.ToLocalTime().ToString("MM/dd/yyyy hh:mm tt")
+    </div>
+    <div>
+        @Html.ActionLink("Continue Shopping", "Index", "Home", new { @class = "btn btn-success" })
     </div>
 
 </div>

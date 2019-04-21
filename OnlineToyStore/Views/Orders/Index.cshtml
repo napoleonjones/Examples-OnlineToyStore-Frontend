@@ -22,8 +22,30 @@
 </head>
 <body>
     <div class="container" id="app">
-        <div class="row">
-            <div v-for="order in orders" class="col-md-6 col-lg-4 col-xl-3" style="margin: 16px 0px;">
+        <div class="row" style="margin-bottom: 40px; height:90%;overflow:auto;">
+            <table cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Discount</th>
+                        <th>Total Price</th>
+                        <th>Order Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="order in orders">
+                        <td>{{order.id | last4Chars}}</td>
+                        <td>{{order.firstname}}</td>
+                        <td>{{order.lastname}}</td>
+                        <td>{{order.discount | toPercent}}</td>
+                        <td>{{order.totalPrice | toCurrency}}</td>
+                        <td>{{order.orderDate | formatDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            @*<div v-for="order in orders" class="col-md-6 col-lg-4 col-xl-3" style="margin: 16px 0px;">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ order.id }} <i class="fas fa-plane"></i> {{ order.orderDate }}</h4>
@@ -32,19 +54,62 @@
                         </transition>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js">
+
+    </script>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/moment.js/moment.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script>
         const apiBaseUrl = 'http://localhost:7071'
         const axiosConfig = {}
         const data = {
             orders: []
         }
+
+        Vue.filter("last4Chars", str => str.substring(str.length - 4))
+
+        Vue.filter('formatDate', function (value) {
+            if (value) {
+                return moment(String(value)).format('MM/DD/YYYY hh:mm:ss')
+            }
+        })
+
+        Vue.filter('toCurrency', function (value) {
+            if (typeof value !== "number") {
+                return value;
+            }
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            });
+            return formatter.format(value);
+        })
+
+        Vue.filter('toPercent', function (value) {
+            if (typeof value !== "number") {
+                return value;
+            }
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'percent',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            });
+            return formatter.format(value);
+        })
+
+        Vue.filter('capitalize', function (value) {
+            if (!value) return ''
+            value = value.toString()
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        })
+
         const app = new Vue({
             el: '#app',
             data: data
