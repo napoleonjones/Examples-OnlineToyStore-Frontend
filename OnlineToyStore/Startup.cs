@@ -45,7 +45,7 @@ namespace OnlineToyStore
 
             services.AddHttpClient("SubmitOrder", c =>
             {
-                c.BaseAddress = new Uri("http://localhost:7071/");
+                c.BaseAddress = new Uri(Configuration["Connections:FunctionsEndpoint"]);
             }).AddTransientHttpErrorPolicy(p =>
             p.WaitAndRetryAsync(new[]
             {
@@ -55,14 +55,6 @@ namespace OnlineToyStore
             }));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddCors(options => options.AddPolicy("CorsPolicy",
-            builder =>
-            {
-                builder.AllowAnyMethod().AllowAnyHeader()
-                       .WithOrigins("http://localhost:55830")
-                       .AllowCredentials();
-            }));
 
             services.AddSignalR();
 

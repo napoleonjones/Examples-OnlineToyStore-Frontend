@@ -17,7 +17,7 @@ namespace OnlineToyStore.Core.Models
         [JsonProperty(PropertyName = "lastname")]
         public string Lastname { get; set; }
 
-        [JsonProperty(PropertyName = "zipecode")]
+        [JsonProperty(PropertyName = "zipcode")]
         public string Zipcode { get; set; }
 
         [JsonProperty(PropertyName = "lineItems")]
