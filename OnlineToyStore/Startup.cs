@@ -45,7 +45,7 @@ namespace OnlineToyStore
 
             services.AddHttpClient("SubmitOrder", c =>
             {
-                c.BaseAddress = new Uri(Configuration["Connections:FunctionsEndpoint"]);
+                c.BaseAddress = new Uri("https://onlinetoystoredemofunctions.azurewebsites.net/");
             }).AddTransientHttpErrorPolicy(p =>
             p.WaitAndRetryAsync(new[]
             {
