@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace OnlineToyStore.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrdersController : Controller
     {
